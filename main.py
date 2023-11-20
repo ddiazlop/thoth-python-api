@@ -1,15 +1,18 @@
 from fastapi import FastAPI
 import pandas as pd
-from statsmodels.tsa.arima.model import ARIMA
 
-from models.expensesByMonth import ExpensesByMonth
+
 import numpy as np
 from sklearn.linear_model import LinearRegression
 
 from models.prediction import Prediction
+from models.expensesByMonth import ExpensesByMonth
 
 app = FastAPI()
 
+@app.get('/')
+async def root():
+    return {'message': 'Hello World'}
 
 @app.post('/predict/expensesPerMonth/linear', response_model=Prediction)
 async def predict_expenses_per_month(expenses_per_month : list[ExpensesByMonth]) -> Prediction:
